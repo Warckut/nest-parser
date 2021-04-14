@@ -1,0 +1,17 @@
+{
+    "type": "mysql",
+    "host": "localhost",
+    "username": "root",
+    "password": "",
+    "port": 3306,
+    "database": "nest_parser",
+    "entities": ["dist/**/*.orm-entity{.ts,.js}"],
+    "synchronize": true,
+    "dropSchema": false,
+    "migrationsRun": true,
+    "logging": true,
+    "migrations": ["dist/src/**/db/migrations/*{.ts,.js}"],
+    "cli": {
+        "migrationsDir": "db/migrations"    
+    }
+}
