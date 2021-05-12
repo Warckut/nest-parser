@@ -20,17 +20,28 @@ export class ParserService {
         const pageContent = await this.puppeteerService.getPageContent(siteURL)
 
         const $ = cheerio.load(pageContent)
-        const countPages = this.arrayFromLength(
+
+        // const countPages: number = 
+        // parseInt($(".PaginationWidget__page-link")
+        //         .last()
+        //         .text()
+        //         .replace(/\s+/g, ' ')
+        //         .trim())
+        const countPages =  ($('*').is('.PaginationWidget__page-link')) ? 
             parseInt($(".PaginationWidget__page-link")
-                .last()
-                .text()
-                .replace(/\s+/g, ' ')
-                .trim())
+            .last()
+            .text()
+            .replace(/\s+/g, ' ')
+            .trim()) : 1
+
+        this.logger.debug(typeof countPages)      
+        const Pages = this.arrayFromLength(
+            countPages
         )
 
         const videocards : Videocard[] = []
 
-        for(const page of countPages) {
+        for(const page of Pages) {
             const pageContent = await this.puppeteerService.getPageContent(`${siteURL}${page}`)
             const $ = cheerio.load(pageContent)
 
