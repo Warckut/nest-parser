@@ -1,24 +1,31 @@
-import { Body, Controller, Get, Logger, Post } from '@nestjs/common';
-// import { CrawlerService } from './Crawler.service';
-import { CreateDto } from './dto';
-import { VideocardOrmEntity } from './entities/videocard.orm-entity';
-import { ParserService } from './parser.service';
+import { Body, Controller, Get, Logger, Param, Post } from '@nestjs/common';
 import { VideocardsService } from './videocards.service';
 
 @Controller('videocards')
 export class VideocardsController {
     private readonly logger = new Logger(VideocardsService.name);
     constructor(
-        // private readonly videocardsService: VideocardsService,
-                private readonly parserService: ParserService
-                ) {}
+        private readonly videocardsService: VideocardsService
+        ) {}
 
     @Get()
-    getAll() {
-        this.parserService.loadVideocardsSitilink()
-        return "все заебись"
+    async getAll() {
+        // this.videocardsService.updateVideocards()
+        return await this.videocardsService.getVideocards()
+        // return "все заебись"
     }
-    
+
+    @Get("update")
+    async update(){
+        this.videocardsService.updateVideocards()
+    }
+
+    // @Get('citilink')
+    // async getCitilinkVideocards() {
+    //     return await this.videocardsService.getCitilinkVideocards()
+    // }
+
+
     // @Get("add")
     // addVideocard(){
     //     // this.logger.debug(createDto);

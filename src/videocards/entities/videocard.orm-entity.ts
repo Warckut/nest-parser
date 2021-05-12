@@ -6,14 +6,17 @@ export class VideocardOrmEntity {
     id: number;
 
     @Column()
-    title: string;
+    name: string;
 
     @Column()
     price: number;
 
     @Column()
+    srcImage: string;
+
+    @Column()
     href: string;
 
     @Column()
-    code: string;
+    shop: string;
 }

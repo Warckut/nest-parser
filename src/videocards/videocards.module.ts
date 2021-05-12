@@ -18,6 +18,6 @@ import { VideocardsService } from './videocards.service';
     ),
 ],
   controllers: [VideocardsController],
-  providers: [PuppeteerService, ParserService]
+  providers: [PuppeteerService, VideocardsService, ParserService]
 })
 export class VideocardsModule {}

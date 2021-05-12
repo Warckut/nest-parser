@@ -1,8 +1,8 @@
 export class Videocard {
-    title: string;
+    name: string;
+    // graphicsProcessor: string;
     price: number;
+    srcImage: string;
     href: string;
-    code: string;
     shop: string;
-    inStock: boolean;
 }

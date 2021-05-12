@@ -16,24 +16,23 @@ export class PuppeteerService {
         const page = await this.browser.newPage()
         
         await page.goto(url, {
-            waitUntil: 'networkidle2',
+            waitUntil: 'networkidle2'
+            ,
             timeout: 3000000
           })
 
         const content = await page.content()
-        this.browser.close()
         return content;
     }
 
     async downloadImage(url:string, title: string){
         const page = await this.browser.newPage()
         const viewSource = await page.goto(url)
-
-        fs.writeFile(`./images/${title}}.jpg`, await viewSource.buffer(), function(err) {
+        await fs.writeFile(`${path.dirname(require.main.filename)}/images/${title}.jpg`, await viewSource.buffer(), function(err) {
             if(err) {
-                this.logger.debug(err);
+                console.log(err);
             }
         });
-        this.browser.close()
     }
+
 }

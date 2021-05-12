@@ -3,4 +3,5 @@ export class CreateDto {
     href: string;
     price: number;
     code: string;
+    shop: string;
 }
