@@ -1,8 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { InjectBrowser, InjectContext } from 'nest-puppeteer';
-import { Browser, BrowserContext } from 'puppeteer';
-import * as fs from "fs"
-import * as path from 'path'
+import { InjectBrowser } from 'nest-puppeteer';
+import { Browser } from 'puppeteer';
 
 
 @Injectable()
@@ -24,15 +22,4 @@ export class PuppeteerService {
         const content = await page.content()
         return content;
     }
-
-    async downloadImage(url:string, title: string){
-        const page = await this.browser.newPage()
-        const viewSource = await page.goto(url)
-        await fs.writeFile(`${path.dirname(require.main.filename)}/images/${title}.jpg`, await viewSource.buffer(), function(err) {
-            if(err) {
-                console.log(err);
-            }
-        });
-    }
-
 }

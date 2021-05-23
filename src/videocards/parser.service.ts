@@ -13,7 +13,7 @@ export class ParserService {
     private arrayFromLength(number: number) {
         return Array.from(new Array(number).keys()).map(k => k + 1)
     }
-
+    
     async loadVideocardsCitilink(): Promise<Videocard[]> {
         const siteURL = "https://www.citilink.ru/catalog/videokarty/?p="
         
@@ -21,12 +21,6 @@ export class ParserService {
 
         const $ = cheerio.load(pageContent)
 
-        // const countPages: number = 
-        // parseInt($(".PaginationWidget__page-link")
-        //         .last()
-        //         .text()
-        //         .replace(/\s+/g, ' ')
-        //         .trim())
         const countPages =  ($('*').is('.PaginationWidget__page-link')) ? 
             parseInt($(".PaginationWidget__page-link")
             .last()
@@ -111,13 +105,17 @@ export class ParserService {
 
                 const href = `https://omega-shops.ru${$(header).children().attr('href')}`
                 this.logger.debug(href)
-                const price = $('.price')
-                .map((j, element) => {
-                    if (j == i)
-                        return $(element).text().replace(/[^\d]/g, '');
-                })
-                .toArray()
-                .toString()
+
+                const price = $(header).parent().parent().parent().children().last()
+                .children().first().children().first().children().first().text().replace(/[^\d]/g, '').toString();
+
+                // const price = $('.price')
+                // .map((j, element) => {
+                //     if (j == i)
+                //         return $(element).text().replace(/[^\d]/g, '');
+                // })
+                // .toArray()
+                // .toString()
 
                 this.logger.debug(price)
 
@@ -126,14 +124,19 @@ export class ParserService {
                 .children()
                 .text()
                 .replace(/\r?\n/g, "")
-                .trim()
+                // .trim()
                 this.logger.debug(name)
-                const srcImage = "https://omega-shops.ru" + $('a.thumb img')
-                    .map((j, element) => {
-                        if (j == i)
-                            return $(element).attr('src');
-                    }).toArray()
+
+                // const srcImage = "https://omega-shops.ru" + $('a.thumb img')
+                //     .map((j, element) => {
+                //         if (j == i)
+                //             return $(element).attr('src');
+                //     }).toArray()
                     
+
+                const srcImage = "https://omega-shops.ru" + $(header).parent().parent().parent().children().first()
+                .children().first().children().last().children().first().attr('src')
+
                 this.logger.debug(srcImage)
 
                 
@@ -154,9 +157,8 @@ export class ParserService {
             ... await this.loadVideocardsCitilink(), 
             ... await this.loadVideocardsOmega()
         ]
-        // await this.loadVideocardsOmega()
         return videocards;
+        // return [];
     }
 
 }
-

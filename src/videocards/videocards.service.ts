@@ -16,7 +16,7 @@ export class VideocardsService {
         private readonly parserService: ParserService,
     ) {}
 
-    @Cron('0 0 0 * * *')
+    @Cron('0 0 2 * * *')
     async handleCron() {
         await this.updateVideocards()
     }
