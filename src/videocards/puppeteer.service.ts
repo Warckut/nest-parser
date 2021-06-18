@@ -14,8 +14,7 @@ export class PuppeteerService {
         const page = await this.browser.newPage()
         
         await page.goto(url, {
-            waitUntil: 'networkidle2'
-            ,
+            waitUntil: 'networkidle2',
             timeout: 3000000
           })
 
